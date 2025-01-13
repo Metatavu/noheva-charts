@@ -1,0 +1,18 @@
+apiVersion: v2
+name: noheva
+description: |
+  Helm chart for the Noheva exhibition system
+type: application
+version: 0.0.1-develop.1
+keywords:
+  - noheva
+dependencies:
+  - name: auth
+    repository: file://charts/auth
+    version: 0.0.1-develop.1
+  - name: noheva-api
+    repository: file://charts/noheva-api
+    version: 0.0.1-develop.1
+  - name: noheva-management
+    repository: file://charts/noheva-management
+    version: 0.0.1-develop.1

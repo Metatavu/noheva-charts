@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.ingress.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+    - host: {{ .Values.auth.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-auth
+                port:
+                  number: 8080
+    - host: {{ .Values.api.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-api
+                port:
+                  number: 8080
+    - host: {{ .Values.management.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-management
+                port:
+                  number: 80
+
+  tls:
+    - hosts:
+        - {{ .Values.auth.hostname }}
+        - {{ .Values.api.hostname }}
+        - {{ .Values.management.hostname }}
+      secretName: {{ .Values.ingress.tls.secretName }}

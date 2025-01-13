@@ -1,0 +1,19 @@
+ingress:
+  annotations: {}
+  labels: {}
+  tls:
+    secretName: chart-example-tls
+
+auth:
+  hostname: auth.example.com
+
+api:
+  hostname: api.example.com
+
+management:
+  hostname: management.example.com
+
+hcv:
+  path: path/to/secrets
+  server: https://hcv.example.com
+  secretName: example-secret

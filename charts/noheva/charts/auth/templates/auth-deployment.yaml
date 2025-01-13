@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-auth
+  namespace: {{ .Release.Namespace }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-auth
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-auth
+    spec:
+      imagePullSecrets:
+      - name: {{ .Release.Name }}-image-pull-secret
+      containers:
+      - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
+        imagePullPolicy: Always
+        name: {{ .Release.Name }}-auth
+        command:
+        - /bin/sh
+        - -c
+        - /opt/keycloak/bin/kc.sh start --optimized
+
+        startupProbe:
+          httpGet:
+            path: /health/started
+            port: 9000
+            scheme: HTTP
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+
+        livenessProbe:
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          httpGet:
+            path: /health
+            port: 9000
+            scheme: HTTP
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+
+        readinessProbe:
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          httpGet:
+            path: /health/ready
+            port: 9000
+            scheme: HTTP
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-auth-secrets
+        env:
+          - name: JAVA_OPTS_APPEND
+            value: -Djgroups.dns.query={{ .Release.Name }}-auth-ping.{{ .Release.Namespace }}.svc.cluster.local
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 4444
+          name: ping
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}

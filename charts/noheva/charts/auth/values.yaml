@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/metatavu/noheva-keycloak
+  pullPolicy: IfNotPresent
+  sha256: xxx
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+startupProbe:
+  failureThreshold: 30
+  periodSeconds: 10
+
+livenessProbe:
+  failureThreshold: 3
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30
+
+readinessProbe:
+  failureThreshold: 3
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 30
