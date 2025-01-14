@@ -95,7 +95,7 @@ jobs:
           echo NOHEVA_MANAGEMENT_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-management:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update noheva management image version
         run: |
-          sed -i 's/sha256: .*/sha256: ${{ steps.auth-tag.outputs.NOHEVA_MANAGEMENT_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-management/values.yaml &&
+          sed -i 's/sha256: .*/sha256: ${{ steps.noheva-management-tag.outputs.NOHEVA_MANAGEMENT_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-management/values.yaml &&
           git add ./charts/noheva/charts/noheva-management/values.yaml
 
       - name: Commit changes
