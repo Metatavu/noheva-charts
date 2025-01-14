@@ -76,7 +76,7 @@ jobs:
       - name: Update auth image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.noheva-auth-tag.outputs.NOHEVA_AUTH_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-auth/values.yaml &&
-          git add ./charts/noheva/charts/noheva-auth-tag/values.yaml
+          git add ./charts/noheva/charts/noheva-auth/values.yaml
 
       - name: Resolve noheva api docker image sha
         id: noheva-api-tag
