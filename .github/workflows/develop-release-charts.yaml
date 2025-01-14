@@ -134,6 +134,7 @@ jobs:
             echo "    nginx.org/client-max-body-size: 150m" >> new-values.yaml &&
             echo "    nginx.org/proxy-connect-timeout: 30s" >> new-values.yaml &&
             echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&
+            echo "    nginx.ingress.kubernetes.io/proxy-buffer-size: 32k" >> new-values.yaml &&
             echo "  labels:" >> new-values.yaml &&
             echo "    use-cloudflare-solver: \"true\"" >> new-values.yaml &&
             echo "  tls:" >> new-values.yaml &&
