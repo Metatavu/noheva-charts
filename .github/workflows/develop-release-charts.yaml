@@ -61,6 +61,10 @@ jobs:
               ${{ secrets.VAULT_PATH }} AUTH_HOSTNAME | AUTH_HOSTNAME ;
               ${{ secrets.VAULT_PATH }} API_HOSTNAME | API_HOSTNAME ;
               ${{ secrets.VAULT_PATH }} MANAGEMENT_HOSTNAME | MANAGEMENT_HOSTNAME ;
+              ${{ secrets.VAULT_PATH }} HCV_PATH | HCV_PATH ;
+              ${{ secrets.VAULT_PATH }} HCV_SERVER | HCV_SERVER ;
+              ${{ secrets.VAULT_PATH }} HCV_SECRET_NAME | HCV_SECRET_NAME
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
