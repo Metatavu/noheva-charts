@@ -21,8 +21,6 @@ spec:
       labels:
         app: {{ .Release.Name }}-auth
     spec:
-      imagePullSecrets:
-      - name: {{ .Release.Name }}-image-pull-secret
       containers:
       - image: {{ .Values.image.repository }}@sha256:{{ .Values.image.sha256 }}
         imagePullPolicy: Always
