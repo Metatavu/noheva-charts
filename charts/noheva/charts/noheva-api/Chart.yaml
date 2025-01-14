@@ -3,6 +3,6 @@ name: noheva-api
 description: |
   Noheva API for the Noheva exhibition system
 type: application
-version: 0.0.1-develop.10
+version: 0.0.1-develop.11
 keywords:
   - noheva
