@@ -40,10 +40,10 @@ jobs:
       - name: Update versions
         run: |
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/noheva/Chart.yaml &&
-          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/noheva/charts/auth/Chart.yaml &&
+          sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/noheva/charts/noheva-auth/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/noheva/charts/noheva-api/Chart.yaml &&
           sed -i 's/version: .*/version: ${{ env.NEW_VERSION }}/g' ./charts/noheva/charts/noheva-management/Chart.yaml &&
-          git add ./charts/noheva/Chart.yaml ./charts/noheva/charts/auth/Chart.yaml ./charts/noheva/charts/noheva-api/Chart.yaml ./charts/noheva/charts/noheva-management/Chart.yaml
+          git add ./charts/noheva/Chart.yaml ./charts/noheva/charts/noheva-auth/Chart.yaml ./charts/noheva/charts/noheva-api/Chart.yaml ./charts/noheva/charts/noheva-management/Chart.yaml
       - name: Import Secrets
         id: import-secrets
         uses: hashicorp/vault-action@v2
