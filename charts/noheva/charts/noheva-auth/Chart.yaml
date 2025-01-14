@@ -1,5 +1,5 @@
 apiVersion: v2
-name: auth
+name: noheva-auth
 description: |
   Authentication services for the Noheva exhibition system
 type: application

@@ -7,8 +7,8 @@ version: 0.0.1-develop.1
 keywords:
   - noheva
 dependencies:
-  - name: auth
-    repository: file://charts/auth
+  - name: noheva-auth
+    repository: file://charts/noheva-auth
     version: 0.0.1-develop.1
   - name: noheva-api
     repository: file://charts/noheva-api
