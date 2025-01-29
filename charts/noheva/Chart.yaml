@@ -3,16 +3,16 @@ name: noheva
 description: |
   Helm chart for the Noheva exhibition system
 type: application
-version: 0.0.1-develop.24
+version: 0.0.1-develop.25
 keywords:
   - noheva
 dependencies:
   - name: noheva-auth
     repository: file://charts/noheva-auth
-    version: 0.0.1-develop.24
+    version: 0.0.1-develop.25
   - name: noheva-api
     repository: file://charts/noheva-api
-    version: 0.0.1-develop.24
+    version: 0.0.1-develop.25
   - name: noheva-management
     repository: file://charts/noheva-management
-    version: 0.0.1-develop.24
+    version: 0.0.1-develop.25
