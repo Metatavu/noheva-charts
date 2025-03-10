@@ -10,7 +10,7 @@ env:
 
 jobs:
   release:
-    environment: develop
+    environment: master
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -72,8 +72,8 @@ jobs:
       - name: Resolve noheva auth docker image sha
         id: noheva-auth-tag
         run: |
-          docker pull ghcr.io/metatavu/noheva-keycloak:develop &&
-          echo NOHEVA_AUTH_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-keycloak:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/noheva-keycloak:master &&
+          echo NOHEVA_AUTH_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-keycloak:master|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update auth image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.noheva-auth-tag.outputs.NOHEVA_AUTH_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-auth/values.yaml &&
@@ -82,8 +82,8 @@ jobs:
       - name: Resolve noheva api docker image sha
         id: noheva-api-tag
         run: |
-          docker pull ghcr.io/metatavu/noheva-api:develop &&
-          echo NOHEVA_API_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-api:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/noheva-api:master &&
+          echo NOHEVA_API_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-api:master|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update noheva api image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.noheva-api-tag.outputs.NOHEVA_API_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-api/values.yaml &&
@@ -92,8 +92,8 @@ jobs:
       - name: Resolve noheva management docker image sha
         id: noheva-management-tag
         run: |
-          docker pull ghcr.io/metatavu/noheva-management:develop &&
-          echo NOHEVA_MANAGEMENT_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-management:develop|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
+          docker pull ghcr.io/metatavu/noheva-management:master &&
+          echo NOHEVA_MANAGEMENT_IMAGE_SHA=$(docker inspect ghcr.io/metatavu/noheva-management:master|jq '.[].RepoDigests[0]'|sed s/\"//g|sed 's/[a-z\.\/\-]*@sha256://') >> $GITHUB_OUTPUT
       - name: Update noheva management image version
         run: |
           sed -i 's/sha256: .*/sha256: ${{ steps.noheva-management-tag.outputs.NOHEVA_MANAGEMENT_IMAGE_SHA }}/g' ./charts/noheva/charts/noheva-management/values.yaml &&
@@ -107,6 +107,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
+      - name: Push version changes to master
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -146,4 +151,4 @@ jobs:
             echo "  path: ${{ env.HCV_PATH }}" >> new-values.yaml &&
             echo "  server: ${{ env.HCV_SERVER }}" >> new-values.yaml &&
             echo "  secretName: ${{ env.HCV_SECRET_NAME }}" >> new-values.yaml &&
-            helm upgrade noheva ./charts/noheva --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml
+            helm install noheva ./charts/noheva --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml
