@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/noheva-keycloak
   pullPolicy: IfNotPresent
-  sha256: xxx
+  sha256: 3ce9d868993ea4607d493528b23e2e3764b436f00cadac666e535a87dcc581c0
 
 resources:
   limits:
