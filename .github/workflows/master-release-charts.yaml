@@ -1,12 +1,9 @@
-name: Develop Release Charts
+name: Master Release Charts
 
 on:
   push:
     branches:
-      - develop
-  repository_dispatch:
-    types:
-      - update-staging
+      - master
 
 env:
   REGISTRY: ghcr.io
