@@ -151,4 +151,4 @@ jobs:
             echo "  path: ${{ env.HCV_PATH }}" >> new-values.yaml &&
             echo "  server: ${{ env.HCV_SERVER }}" >> new-values.yaml &&
             echo "  secretName: ${{ env.HCV_SECRET_NAME }}" >> new-values.yaml &&
-            helm install noheva ./charts/noheva --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml
+            helm upgrade noheva ./charts/noheva --namespace ${{ env.K8S_NAMESPACE }} -f new-values.yaml
