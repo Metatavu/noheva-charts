@@ -23,6 +23,16 @@ spec:
                 name: {{ .Release.Name }}-auth
                 port:
                   number: 8080
+    - host: {{ .Values.auth.hostname }}
+      http:
+        paths:
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-auth
+                port:
+                  number: 9000
     - host: {{ .Values.api.hostname }}
       http:
         paths:
