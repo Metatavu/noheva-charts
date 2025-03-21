@@ -3,6 +3,6 @@ name: noheva-management
 description: |
   Noheva management UI for the Noheva exhibition system
 type: application
-version: 0.0.6-develop.2
+version: 0.0.6
 keywords:
   - noheva
