@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/metatavu/noheva-api
   pullPolicy: Always
-  sha256: 0b7dc3ea555767a76175e5505ca2b60461adbe702bf7a60e302903f9873a413a
+  sha256: fb840540cfa6902e1234e969c5a9cce57582cffe129a1868952b850960e172c0
 
 metadata:
   annotations:
