@@ -3,7 +3,7 @@ name: noheva-auth
 description: |
   Authentication services for the Noheva exhibition system
 type: application
-version: 0.0.7-develop.7
+version: 0.0.7-digimatka.5
 keywords:
   - noheva
   - keycloak
