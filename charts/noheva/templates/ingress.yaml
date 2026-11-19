@@ -13,16 +13,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
-    - host: {{ .Values.auth.hostname }}
-      http:
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ .Release.Name }}-auth
-                port:
-                  number: 8080
+    # One rule per host: the F5 NGINX Ingress Controller rejects an Ingress
+    # that repeats a host.
     - host: {{ .Values.auth.hostname }}
       http:
         paths:
@@ -33,6 +25,13 @@ spec:
                 name: {{ .Release.Name }}-auth
                 port:
                   number: 9000
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-auth
+                port:
+                  number: 8080
     - host: {{ .Values.api.hostname }}
       http:
         paths:
