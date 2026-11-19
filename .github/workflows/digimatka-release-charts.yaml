@@ -131,11 +131,16 @@ jobs:
             echo "    cert-manager.io/cluster-issuer: ${{ env.K8S_CLUSTER_ISSUER }}" >> new-values.yaml &&
             echo "    ingress.kubernetes.io/force-ssl-redirect: \"true\"" >> new-values.yaml &&
             echo "    ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
-            echo "    kubernetes.io/ingress.class: nginx" >> new-values.yaml &&
+            echo "    kubernetes.io/ingress.class: nginx-ingress" >> new-values.yaml &&
             echo "    nginx.ingress.kubernetes.io/proxy-body-size: 150m" >> new-values.yaml &&
             echo "    nginx.org/client-max-body-size: 150m" >> new-values.yaml &&
             echo "    nginx.org/proxy-connect-timeout: 30s" >> new-values.yaml &&
-            echo "    nginx.org/proxy-read-timeout: 30s" >> new-values.yaml &&
+            echo "    nginx.org/proxy-read-timeout: 60s" >> new-values.yaml &&
+            echo "    nginx.org/proxy-send-timeout: 60s" >> new-values.yaml &&
+            echo "    nginx.org/proxy-buffering: \"False\"" >> new-values.yaml &&
+            echo "    nginx.org/proxy-buffer-size: 32k" >> new-values.yaml &&
+            echo "    nginx.org/proxy-buffers: \"4 32k\"" >> new-values.yaml &&
+            echo "    nginx.org/http-redirect-code: \"308\"" >> new-values.yaml &&
             echo "    nginx.ingress.kubernetes.io/proxy-buffer-size: 32k" >> new-values.yaml &&
             echo "  labels:" >> new-values.yaml &&
             echo "    use-http01-solver: \"true\"" >> new-values.yaml &&
